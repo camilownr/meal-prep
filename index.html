@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c8392b">
+<title>Meal Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* VOICE everyday, practical, kitchen-ready, zero fluff
+   IDEA a market-stall sign plus a prep card taped to the fridge, held in one hand
+   PICTURE the working checklist itself: big thumb rows, progress always in view
+   COLOUR tomato-red field, white ground, meal accents honey / chili / basil
+   TYPE Barlow Condensed signage + Inter
+   LAYOUT phone first: slim header, sticky progress, one column, bottom tab bar in thumb reach */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#141110);--card:light-dark(#f6f2ee,#1f1a18);--ink:light-dark(#1b1513,#f3ece8);--mute:light-dark(#6f625c,#a89a93);--line:light-dark(#e8dfd8,#332b28);--red:#c8392b;--fr:#b97c06;--mi:#d2452d;--ab:#2f7d4a;--ok:#2f7d4a;--safe-b:env(safe-area-inset-bottom,0px)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:150px}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.45 Inter,system-ui,sans-serif;overflow-x:clip;touch-action:manipulation}
+h1,h2,h3{font-family:"Barlow Condensed",Inter,sans-serif;line-height:1.05;margin:0;letter-spacing:.2px}
+button{font:inherit;color:inherit}
+button:focus-visible,label:focus-within,a:focus-visible{outline:3px solid #ffb703;outline-offset:2px}
+.top{background:var(--red);color:#fff;padding:calc(env(safe-area-inset-top,0px) + 14px) max(5vw,16px,env(safe-area-inset-right,0px)) 12px max(5vw,16px,env(safe-area-inset-left,0px))}
+.top h1{font-size:36px}
+.top p{margin:2px 0 0;opacity:.88;font-size:15px}
+main{max-width:640px;margin:0 auto;padding:0 max(4vw,14px) calc(110px + var(--safe-b))}
+.sticky{position:sticky;top:0;z-index:4;background:var(--bg);padding:12px 0 10px;border-bottom:1px solid var(--line)}
+.sum{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sum b{font:700 30px "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums}
+.sum span{color:var(--mute);font-size:15px}
+.bar{height:10px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:var(--ok);border-radius:9px;transition:width .3s}
+.portions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.pc{background:var(--card);border-radius:14px;padding:8px 6px 6px;text-align:center;border-top:4px solid var(--c)}
+.pc small{display:block;font-size:13px;color:var(--mute);font-weight:500}
+.step{display:flex;align-items:center;justify-content:space-between;gap:2px}
+.step b{font:700 28px "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;min-width:26px}
+.ib{width:44px;height:44px;border-radius:12px;border:0;background:var(--bg);font-size:24px;font-weight:600;line-height:1;cursor:pointer;display:grid;place-items:center}
+.ib:active{transform:scale(.92)}
+.sec{display:flex;align-items:baseline;gap:8px;margin:22px 0 4px;font-size:25px}
+.sec span{font:500 14px Inter,sans-serif;color:var(--mute)}
+ul{list-style:none;margin:0;padding:0}
+.row{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--line);min-height:62px;cursor:pointer;user-select:none;transition:opacity .22s,transform .22s}
+.row:active{background:var(--card)}
+.row.out{opacity:0;transform:translateX(40px)}
+.row input{appearance:none;-webkit-appearance:none;flex:none;width:30px;height:30px;border:2px solid var(--mute);border-radius:9px;display:grid;place-items:center;margin:0;cursor:pointer;background:var(--bg)}
+.row input:checked{background:var(--k,var(--ok));border-color:var(--k,var(--ok))}
+.row input:checked::after{content:"";width:8px;height:15px;border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.nm{flex:1;font-weight:500}
+.nm small{display:block;font-weight:400;color:var(--mute);font-size:14px;line-height:1.3;margin-top:2px}
+.amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;text-align:right}
+.done .nm,.done .amt{text-decoration:line-through;color:var(--mute)}
+.empty{text-align:center;padding:40px 10px;color:var(--mute)}
+.empty b{display:block;font:700 34px "Barlow Condensed",sans-serif;color:var(--ok);margin-bottom:4px}
+details{margin-top:18px;border-radius:14px;background:var(--card);padding:0 12px}
+summary{cursor:pointer;font-weight:600;min-height:52px;display:flex;align-items:center;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";margin-left:auto;width:9px;height:9px;border:solid var(--mute);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
+details[open] summary::after{transform:rotate(-135deg)}
+.cart .row{opacity:.7}
+.txt{background:none;border:0;color:var(--red);font-weight:600;font-size:15px;min-height:44px;padding:0 4px;cursor:pointer}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;background:var(--card);border-radius:14px;padding:4px}
+.seg button{border:0;border-radius:11px;min-height:46px;background:none;font-weight:600;font-size:15px;cursor:pointer;color:var(--mute)}
+.seg button[aria-pressed=true]{background:var(--c);color:#fff}
+.mhead{background:var(--c);color:#fff;border-radius:18px;padding:14px 16px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mhead h2{font-size:30px}
+.mhead p{margin:2px 0 0;opacity:.9;font-size:15px}
+.mhead .step{background:rgba(255,255,255,.16);border-radius:14px;padding:3px}
+.mhead .ib{background:rgba(255,255,255,.22);color:#fff}
+.mhead .step b{color:#fff;font-size:32px;min-width:34px;text-align:center}
+.mhead .step small{display:block;font-size:12px;text-align:center;opacity:.9;margin-top:-4px}
+.prep li{display:flex;gap:12px;align-items:flex-start;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none}
+.prep li:active{background:var(--card)}
+.prep .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font:700 19px "Barlow Condensed",sans-serif}
+.prep li.done{color:var(--mute)}
+.prep li.done span{text-decoration:line-through}
+.prep li.done .n{background:var(--line);color:var(--mute)}
+.acts{display:flex;justify-content:space-between;flex-wrap:wrap;margin-top:6px}
+.note{font-size:13px;color:var(--mute);text-align:center;margin-top:28px}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px max(4vw,14px) calc(8px + var(--safe-b))}
+nav.tabs a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;text-decoration:none;color:var(--mute);font-weight:600;font-size:16px}
+nav.tabs a svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a[aria-current=page]{background:var(--red);color:#fff}
+nav.tabs .badge{font:600 13px Inter,sans-serif;background:rgba(255,255,255,.25);border-radius:20px;padding:1px 7px}
+nav.tabs a:not([aria-current]) .badge{background:var(--card)}
+.toast{position:fixed;left:50%;bottom:calc(84px + var(--safe-b));transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:7;background:var(--ink);color:var(--bg);border-radius:14px;padding:6px 6px 6px 16px;display:flex;align-items:center;gap:10px;font-size:15px;max-width:calc(100vw - 28px);transition:opacity .2s,transform .2s}
+.toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.toast button{border:0;background:none;color:#ffb703;font-weight:600;min-height:44px;padding:0 12px;cursor:pointer;flex:none}
+[hidden]{display:none!important}
+@media(min-width:700px){.top h1{font-size:42px}}
+@media(prefers-reduced-motion:reduce){.row,.bar i,.toast,summary::after{transition:none}}
+</style>
+</head>
+<body>
+<header class="top"><h1>Meal Prep</h1><p id="sub">Einkaufsliste nach Abteilungen</p></header>
+<main>
+<section id="v-einkauf">
+  <div class="sticky">
+    <div class="sum"><b id="progNum">0 / 0</b><span id="progTxt">im Wagen</span></div>
+    <div class="bar"><i id="barFill" style="width:0"></i></div>
+  </div>
+  <div class="portions" id="shopSteps"></div>
+  <div id="shopList"></div>
+  <div class="acts"><button class="txt" id="resetShop" type="button">Liste zurücksetzen</button></div>
+</section>
+<section id="v-mahlzeiten" hidden>
+  <div class="sticky"><div class="seg" id="seg"></div></div>
+  <div id="meal"></div>
+</section>
+<p class="note">Mengen nach deinem Meal-Prep-Plan. Häkchen werden nur in diesem Browser gespeichert.</p>
+</main>
+<nav class="tabs" aria-label="Ansicht">
+  <a href="#einkauf" id="t-einkauf"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>Einkauf <span class="badge" id="badge">0</span></a>
+  <a href="#mahlzeiten" id="t-mahlzeiten"><svg viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M12 3v4M8 5v2M16 5v2"/></svg>Kochen</a>
+</nav>
+<div class="toast" id="toast" role="status"><span id="toastTxt"></span><button type="button" id="undo">Rückgängig</button></div>
+<script>
+{
+const SECT=[['obst','Obst'],['gemuese','Gemüse'],['fleisch','Fleisch'],['kuehl','Kühlregal'],['getreide','Nudeln, Reis & Getreide'],['konserven','Konserven'],['nuesse','Nüsse & Samen'],['suess','Honig & Süßes'],['oel','Öl'],['gewuerze','Gewürze']];
+const nf=(x,d=1)=>x.toLocaleString('de-AT',{maximumFractionDigits:d});
+const ING={
+ banane:{n:'Bananen (groß)',s:'obst',u:'Stück'},
+ heidelbeeren:{n:'Heidelbeeren',s:'obst',u:'g',h:()=>'frisch oder TK'},
+ kiwi:{n:'Kiwi',s:'obst',u:'Stück'},
+ kartoffeln:{n:'Kartoffeln',s:'gemuese',u:'g'},
+ karotten:{n:'Karotten',s:'gemuese',u:'g'},
+ paprika:{n:'Rote Paprika',s:'gemuese',u:'g'},
+ brokkoli:{n:'Brokkoli',s:'gemuese',u:'g'},
+ zwiebel:{n:'Zwiebeln',s:'gemuese',u:'Stück'},
+ knoblauch:{n:'Knoblauch',s:'gemuese',u:'Zehen',h:q=>'≈ '+Math.ceil(q/10)+' Knolle'},
+ haehnchen:{n:'Hähnchenbrust',s:'fleisch',u:'g'},
+ skyr:{n:'Skyr',s:'kuehl',u:'g'},
+ parmesan:{n:'Parmesan',s:'kuehl',u:'g'},
+ ei:{n:'Eier',s:'kuehl',u:'Stück'},
+ hafer:{n:'Haferflocken',s:'getreide',u:'g'},
+ reis:{n:'Basmatireis (trocken)',s:'getreide',u:'g'},
+ nudeln:{n:'Nudeln (trocken)',s:'getreide',u:'g'},
+ bohnen:{n:'Kidneybohnen',s:'konserven',u:'g',d:240,du:['Dose','Dosen'],h:(q,shop)=>shop?nf(Math.round(q))+' g abgetropft · Dose 420 g (240 g abgetropft)':'abgetropft · ≈ '+nf(q/240,1)+' Dosen'},
+ tomaten:{n:'Passierte Tomaten',s:'konserven',u:'g',d:500,du:['Packung','Packungen'],h:(q,shop)=>shop?nf(Math.round(q))+' g · Packung à 500 g':'≈ '+nf(q/500,1)+' Packungen à 500 g'},
+ mandeln:{n:'Mandeln',s:'nuesse',u:'g'},
+ kuerbis:{n:'Kürbiskerne',s:'nuesse',u:'g'},
+ lein:{n:'Leinsamen, geschrotet',s:'nuesse',u:'g'},
+ sonnen:{n:'Sonnenblumenkerne',s:'nuesse',u:'g'},
+ honig:{n:'Honig',s:'suess',u:'g'},
+ oel:{n:'Olivenöl',s:'oel',u:'g'},
+ kreuz:{n:'Kreuzkümmel',s:'gewuerze'},
+ paprikap:{n:'Paprikapulver (edelsüß + geräuchert)',s:'gewuerze'},
+ chili:{n:'Chili',s:'gewuerze'},
+ basilikum:{n:'Basilikum',s:'gewuerze'},
+ oregano:{n:'Oregano',s:'gewuerze'},
+ pfeffer:{n:'Pfeffer',s:'gewuerze'},
+ salz:{n:'Jodsalz',s:'gewuerze'}
+};
+const MEALS=[
+ {id:'fr',name:'Frühstück',short:'Frühstück',dish:'Skyr-Hafer-Shake',cook:1,shop:5,
+  items:[['hafer',75],['skyr',250],['banane',2],['heidelbeeren',100],['honig',30],['mandeln',25],['kuerbis',15],['lein',10],['sonnen',15],['kiwi',1]],
+  steps:['Alle Zutaten in den Mixer geben.','Mit Wasser zur gewünschten Konsistenz mixen.']},
+ {id:'mi',name:'Mittagessen',short:'Mittag',dish:'Chicken-Chili mit Kartoffeln und Reis',cook:2,shop:5,
+  items:[['haehnchen',135],['bohnen',150],['kartoffeln',250],['reis',100],['tomaten',1000/3],['karotten',80],['paprika',80],['oel',13.5],['zwiebel',.5],['knoblauch',1],['kreuz'],['paprikap'],['chili'],['pfeffer'],['salz']],
+  steps:['Hähnchen würfeln, Kartoffeln und Karotten würfeln, Paprika und Zwiebel schneiden.','Hähnchen im Olivenöl portionsweise anbraten, Zwiebel und Knoblauch kurz mitbraten.','Kartoffeln, Karotten, Paprika, passierte Tomaten und etwas Wasser dazugeben und würzen.','15–25 Minuten köcheln, bis die Kartoffeln weich sind und das Hähnchen durchgegart ist.','Kidneybohnen in den letzten 5–10 Minuten dazugeben.','Reis separat kochen, alles gleichmäßig portionieren.']},
+ {id:'ab',name:'Abendessen',short:'Abend',dish:'Mediterrane Chicken-Pasta',cook:2,shop:5,
+  items:[['haehnchen',135],['nudeln',150],['tomaten',1000/3],['brokkoli',100],['paprika',100],['karotten',100],['parmesan',25],['ei',1],['oel',20],['knoblauch',1],['basilikum'],['oregano'],['pfeffer'],['salz']],
+  steps:['Nudeln bissfest kochen, etwas Nudelwasser aufheben.','Hähnchen würfeln und im Olivenöl anbraten.','Karotten, Paprika und Brokkoli dazugeben und einige Minuten garen.','Passierte Tomaten und Knoblauch einrühren, würzen.','Parmesan und etwas Nudelwasser einrühren, bis die Sauce cremig ist.','Nudeln unterheben und portionieren.','Pro Portion 1 Ei dazu.']}
+];
+const KEY='mealprep-v1';
+let st={shop:{},cook:{},bought:{},done:{},steps:{},meal:'mi'};
+MEALS.forEach(m=>{st.shop[m.id]=m.shop;st.cook[m.id]=m.cook;st.done[m.id]={};st.steps[m.id]={}});
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s)st={...st,...s,done:{...st.done,...(s.done||{})},steps:{...st.steps,...(s.steps||{})}}}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+const $=id=>document.getElementById(id);
+const meal=id=>MEALS.find(m=>m.id===id);
+
+function amt(id,q,shop){
+ const u=ING[id].u;if(q==null||!u)return'';
+ if(shop&&ING[id].d){const n=Math.ceil(q/ING[id].d);return n+' '+ING[id].du[n===1?0:1]}
+ if(u==='g')return q>=1000?nf(q/1000,2)+' kg':(q>=100?nf(Math.round(q)):nf(Math.round(q*10)/10))+' g';
+ const v=shop?Math.ceil(q):q;return nf(v)+' '+u;
+}
+function totals(){
+ const t={};
+ MEALS.forEach(m=>{const n=st.shop[m.id];if(!n)return;
+  m.items.forEach(([id,q])=>{if(q==null){if(!(id in t))t[id]=null}else t[id]=(t[id]||0)+q*n})});
+ return t;
+}
+function row(id,q,attr,checked,shop){
+ const h=ING[id].h&&q!=null?ING[id].h(q,shop):'';
+ return `<li><label class="row${checked?' done':''}"><input type="checkbox" ${attr} ${checked?'checked':''}><span class="nm">${ING[id].n}${h?`<small>${h}</small>`:''}</span><span class="amt">${amt(id,q,shop)}</span></label></li>`;
+}
+function stepper(attrD,attrI,val,label){
+ return `<div class="step"><button class="ib" type="button" ${attrD} aria-label="${label} weniger">−</button><b>${val}</b><button class="ib" type="button" ${attrI} aria-label="${label} mehr">+</button></div>`;
+}
+function renderShop(){
+ $('shopSteps').innerHTML=MEALS.map(m=>`<div class="pc" style="--c:var(--${m.id})">${stepper(`data-sd="${m.id}"`,`data-si="${m.id}"`,st.shop[m.id],m.name)}<small>${m.short} · Tage</small></div>`).join('');
+ const t=totals(),ids=Object.keys(t),open=ids.filter(i=>!st.bought[i]),got=ids.filter(i=>st.bought[i]);
+ let html=SECT.map(([s,label])=>{
+  const its=open.filter(i=>ING[i].s===s);if(!its.length)return'';
+  return `<h2 class="sec">${label}<span>${its.length}</span></h2><ul>${its.map(i=>row(i,t[i],`data-buy="${i}"`,false,true)).join('')}</ul>`;
+ }).join('');
+ if(!ids.length)html='<div class="empty">Keine Portionen ausgewählt.</div>';
+ else if(!open.length)html='<div class="empty"><b>Alles im Wagen</b>Einkauf erledigt.</div>';
+ if(got.length)html+=`<details class="cart"><summary>Im Wagen (${got.length}) – antippen zum Zurückholen</summary><ul>${got.map(i=>row(i,t[i],`data-unbuy="${i}"`,true,true)).join('')}</ul></details>`;
+ $('shopList').innerHTML=html;
+ $('barFill').style.width=(ids.length?got.length/ids.length*100:0)+'%';
+ $('progNum').textContent=`${got.length} / ${ids.length}`;
+ $('progTxt').textContent=open.length?`noch ${open.length} offen`:'fertig';
+ $('badge').textContent=open.length;
+}
+function renderSeg(){
+ $('seg').innerHTML=MEALS.map(m=>`<button type="button" data-meal="${m.id}" style="--c:var(--${m.id})" aria-pressed="${st.meal===m.id}">${m.short}</button>`).join('');
+}
+function renderMeal(){
+ const m=meal(st.meal)||MEALS[0],n=st.cook[m.id],sd=st.steps[m.id]||{};
+ const doneN=Object.keys(st.done[m.id]).length;
+ $('meal').innerHTML=`<div class="mhead" style="--c:var(--${m.id})"><div><h2>${m.name}</h2><p>${m.dish}</p></div><div>${stepper(`data-cd="${m.id}"`,`data-ci="${m.id}"`,n,'Portionen')}<small>Portionen</small></div></div>
+ <h2 class="sec">Zutaten<span>${doneN} von ${m.items.length} bereit</span></h2>
+ <ul style="--k:var(--${m.id})">${m.items.map(([id,q])=>row(id,q==null?null:q*n,`data-done="${m.id}:${id}"`,!!st.done[m.id][id],false)).join('')}</ul>
+ <h2 class="sec">Zubereitung<span>antippen zum Abhaken</span></h2>
+ <ol class="prep" style="--c:var(--${m.id});padding:0;margin:0">${m.steps.map((s,i)=>`<li class="${sd[i]?'done':''}" data-st="${m.id}:${i}" tabindex="0" role="checkbox" aria-checked="${!!sd[i]}"><span class="n">${i+1}</span><span>${s}</span></li>`).join('')}</ol>
+ <div class="acts"><button class="txt" type="button" data-reset="${m.id}">Häkchen zurücksetzen</button></div>`;
+ $('sub').textContent=m.dish;
+}
+let undoFn=null,tmr=0;
+function toast(msg,fn){
+ undoFn=fn;$('toastTxt').textContent=msg;$('toast').classList.add('on');
+ clearTimeout(tmr);tmr=setTimeout(()=>{$('toast').classList.remove('on');undoFn=null},4000);
+}
+const rm=()=>matchMedia('(prefers-reduced-motion:reduce)').matches;
+document.addEventListener('click',e=>{
+ const li=e.target.closest('[data-st]');
+ if(li){const[m,i]=li.dataset.st.split(':');st.steps[m]=st.steps[m]||{};if(st.steps[m][i])delete st.steps[m][i];else st.steps[m][i]=1;save();renderMeal();return}
+ const b=e.target.closest('button');if(!b)return;const d=b.dataset;
+ if(d.sd||d.si){const id=d.sd||d.si;st.shop[id]=Math.max(0,Math.min(14,st.shop[id]+(d.si?1:-1)));save();renderShop()}
+ if(d.cd||d.ci){const id=d.cd||d.ci;st.cook[id]=Math.max(1,Math.min(7,st.cook[id]+(d.ci?1:-1)));save();renderMeal()}
+ if(d.meal){st.meal=d.meal;save();renderSeg();renderMeal();window.scrollTo({top:0,behavior:rm()?'auto':'smooth'})}
+ if(d.reset){const prev={done:st.done[d.reset],steps:st.steps[d.reset]};st.done[d.reset]={};st.steps[d.reset]={};save();renderMeal();toast('Häkchen zurückgesetzt',()=>{st.done[d.reset]=prev.done;st.steps[d.reset]=prev.steps;save();renderMeal()})}
+ if(b.id==='resetShop'){const prev=st.bought;st.bought={};save();renderShop();toast('Liste zurückgesetzt',()=>{st.bought=prev;save();renderShop()})}
+ if(b.id==='undo'&&undoFn){const f=undoFn;undoFn=null;$('toast').classList.remove('on');f()}
+});
+document.addEventListener('keydown',e=>{const li=e.target.closest&&e.target.closest('[data-st]');if(li&&(e.key===' '||e.key==='Enter')){e.preventDefault();li.click()}});
+document.addEventListener('change',e=>{
+ const d=e.target.dataset||{};
+ if(d.buy){const id=d.buy;e.target.closest('.row').classList.add('out');st.bought[id]=1;save();setTimeout(renderShop,rm()?0:220);toast(ING[id].n+' im Wagen',()=>{delete st.bought[id];save();renderShop()})}
+ if(d.unbuy){delete st.bought[d.unbuy];save();renderShop()}
+ if(d.done){const[m,id]=d.done.split(':');if(e.target.checked)st.done[m][id]=1;else delete st.done[m][id];save();e.target.closest('.row').classList.toggle('done',e.target.checked);const s=document.querySelector('#meal .sec span');if(s)s.textContent=`${Object.keys(st.done[m]).length} von ${meal(m).items.length} bereit`}
+});
+function route(){
+ const v=location.hash==='#mahlzeiten'?'mahlzeiten':'einkauf';
+ ['einkauf','mahlzeiten'].forEach(x=>{$('v-'+x).hidden=x!==v;const t=$('t-'+x);if(x===v)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current')});
+ if(v==='einkauf')$('sub').textContent='Einkaufsliste nach Abteilungen';else renderMeal();
+ window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);
+renderShop();renderSeg();renderMeal();route();
+}
+</script>
+</body>
+</html>
