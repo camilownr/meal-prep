@@ -86,7 +86,7 @@ details[open] summary::after{transform:rotate(-135deg)}
 .prep li.done .n{background:var(--line);color:var(--mute)}
 .acts{display:flex;justify-content:space-between;flex-wrap:wrap;margin-top:6px}
 .note{font-size:13px;color:var(--mute);text-align:center;margin-top:28px}
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px max(4vw,14px,calc((100vw - 640px)/2)) calc(8px + var(--safe-b))}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:8px max(4vw,14px,calc((100vw - 640px)/2)) calc(8px + var(--safe-b))}
 nav.tabs a{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:14px;text-decoration:none;color:var(--mute);font-weight:600;font-size:16px}
 nav.tabs a svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 nav.tabs a[aria-current=page]{background:var(--a-soft);color:var(--a)}
@@ -96,15 +96,76 @@ nav.tabs a:not([aria-current]) .badge{background:var(--card);color:var(--mute)}
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
 .toast span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .toast button{border:0;background:none;color:#fff;text-decoration:underline;font-weight:600;min-height:44px;padding:0 12px;cursor:pointer;flex:none}
+/* Heute: Wasser + Abhaken */
+.dnav{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dnav b{font:700 26px "Barlow Condensed",sans-serif;text-align:center;flex:1}
+.dnav b small{display:block;font:500 13px Inter,sans-serif;color:var(--mute)}
+.dnav .ib{background:var(--card)}
+.dnav .ib:disabled{opacity:.3;cursor:default}
+.wcard{background:var(--card);border-radius:18px;padding:16px;margin-top:6px}
+.whead{display:flex;align-items:center;gap:16px}
+.ring{flex:none;width:118px;height:118px;position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:11}
+.ring .bgc{stroke:var(--line)}
+.ring .fgc{stroke:var(--a);stroke-linecap:round;transition:stroke-dashoffset .35s}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring div b{font:700 30px "Barlow Condensed",sans-serif;font-variant-numeric:tabular-nums;line-height:1}
+.ring div small{font-size:13px;color:var(--mute)}
+.winfo h2{font-size:28px}
+.winfo p{margin:2px 0 0;color:var(--mute);font-size:15px}
+.wbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.wbtn{border:0;border-radius:14px;background:var(--bg);min-height:64px;cursor:pointer;font-weight:600;display:flex;align-items:center;justify-content:center;gap:10px;font-size:16px}
+.wbtn svg{width:26px;height:26px;fill:none;stroke:var(--a);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wbtn small{display:block;font-weight:500;color:var(--mute);font-size:13px}
+.wbtn:active{transform:scale(.97)}
+.gsz{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:var(--mute)}
+.gsz button{border:1px solid var(--line);background:var(--bg);border-radius:20px;min-height:36px;padding:0 10px;font-size:14px;font-weight:600;cursor:pointer;color:var(--mute)}
+.gsz button[aria-pressed=true]{border-color:var(--a);color:var(--a);background:var(--a-soft)}
+.trow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);cursor:pointer}
+.trow span{font-weight:600}
+.trow span small{display:block;font-weight:400;color:var(--mute);font-size:14px}
+.trow:focus-within{outline:none}.trow:has(.sw:focus-visible){outline:3px solid var(--a);outline-offset:2px}
+.sw{appearance:none;-webkit-appearance:none;flex:none;width:52px;height:32px;border-radius:20px;background:var(--line);position:relative;cursor:pointer;margin:0;transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.sw:checked{background:var(--a)}
+.sw:checked::after{transform:translateX(20px)}
+.wlog{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.wlog span{background:var(--bg);border-radius:20px;padding:3px 10px;font-size:13px;color:var(--mute);font-variant-numeric:tabular-nums}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:14px;align-items:end}
+.week button{border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;color:var(--mute)}
+.week i{display:block;width:100%;max-width:30px;height:46px;border-radius:8px;background:var(--line);position:relative;overflow:hidden}
+.week i em{position:absolute;left:0;right:0;bottom:0;background:var(--a);opacity:.85}
+.week button[aria-current=date]{color:var(--ink);font-weight:700}
+.badge.t{background:var(--a)}
 [hidden]{display:none!important}
 @media(min-width:700px){.top h1{font-size:42px}}
-@media(prefers-reduced-motion:reduce){.row,.bar i,.toast,summary::after{transition:none}}
+@media(prefers-reduced-motion:reduce){.row,.bar i,.toast,summary::after,.ring .fgc,.sw,.sw::after{transition:none}}
 </style>
 </head>
 <body>
-<header class="top"><h1>Meal Prep</h1><p id="sub">Einkaufsliste nach Abteilungen</p></header>
+<header class="top"><h1>Meal Prep</h1><p id="sub">Wasser, Supplements &amp; Hautpflege</p></header>
 <main>
-<section id="v-einkauf">
+<section id="v-heute">
+  <div class="sticky"><div class="dnav"><button class="ib" type="button" id="dPrev" aria-label="Vorheriger Tag">‹</button><b id="dLbl"></b><button class="ib" type="button" id="dNext" aria-label="Nächster Tag">›</button></div></div>
+  <div class="wcard">
+    <div class="whead">
+      <div class="ring" aria-hidden="true"><svg viewBox="0 0 120 120"><circle class="bgc" cx="60" cy="60" r="52"/><circle class="fgc" id="wRing" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73"/></svg><div><b id="wPct">0 %</b><small>vom Ziel</small></div></div>
+      <div class="winfo"><h2 id="wNum">0 / 3,4 L</h2><p id="wTxt"></p></div>
+    </div>
+    <div class="wbtns">
+      <button class="wbtn" type="button" id="addGlas"><svg viewBox="0 0 24 24"><path d="M6 3h12l-1.6 17a1 1 0 0 1-1 .9H8.6a1 1 0 0 1-1-.9z"/><path d="M6.6 9h10.8"/></svg><span>+ Glas<small id="glasLbl">0,25 L</small></span></button>
+      <button class="wbtn" type="button" id="addFl"><svg viewBox="0 0 24 24"><path d="M10 2h4v3l2 3v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-3z"/><path d="M8 12h8"/></svg><span>+ Flasche<small>1,5 L</small></span></button>
+    </div>
+    <div class="gsz" id="gsz"></div>
+    <div class="wlog" id="wLog"></div>
+    <label class="trow"><span id="trLbl">Trainingstag<small>+1 L fürs Training</small></span><input type="checkbox" class="sw" id="trSw"></label>
+    <div class="acts"><button class="txt" type="button" id="wUndo">Letzten Eintrag entfernen</button></div>
+  </div>
+  <div class="week" id="week" aria-label="Wasser der letzten 7 Tage"></div>
+  <div id="chk"></div>
+</section>
+<section id="v-einkauf" hidden>
   <div class="sticky">
     <div class="sum"><b id="progNum">0 / 0</b><span id="progTxt">im Wagen</span></div>
     <div class="bar"><i id="barFill" style="width:0"></i></div>
@@ -117,9 +178,10 @@ nav.tabs a:not([aria-current]) .badge{background:var(--card);color:var(--mute)}
   <div class="sticky"><div class="seg" id="seg"></div></div>
   <div id="meal"></div>
 </section>
-<p class="note">Mengen nach deinem Meal-Prep-Plan. Häkchen werden nur in diesem Browser gespeichert.</p>
+<p class="note">Mengen nach deinem Meal-Prep-Plan. Wasser und Häkchen werden nur in diesem Browser gespeichert.</p>
 </main>
 <nav class="tabs" aria-label="Ansicht">
+  <a href="#heute" id="t-heute"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg>Heute <span class="badge" id="badgeT">0</span></a>
   <a href="#einkauf" id="t-einkauf"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg>Einkauf <span class="badge" id="badge">0</span></a>
   <a href="#mahlzeiten" id="t-mahlzeiten"><svg viewBox="0 0 24 24"><path d="M4 11h16a8 8 0 0 1-16 0z"/><path d="M12 3v4M8 5v2M16 5v2"/></svg>Kochen</a>
 </nav>
@@ -253,14 +315,82 @@ document.addEventListener('change',e=>{
  if(d.unbuy){delete st.bought[d.unbuy];save();renderShop()}
  if(d.done){const[m,id]=d.done.split(':');if(e.target.checked)st.done[m][id]=1;else delete st.done[m][id];save();e.target.closest('.row').classList.toggle('done',e.target.checked);const s=document.querySelector('#meal .sec span');if(s)s.textContent=`${Object.keys(st.done[m]).length} von ${meal(m).items.length} bereit`}
 });
+/* ---------- Heute: Wasser, Supplements, Hautpflege ---------- */
+const TKEY='mealprep-tag-v1',BASE=3400,EXTRA=1000,FL=1500,GL=[200,250,300,400];
+const TRAIN={0:'Push Day',3:'Upper Day',5:'Leg Day',6:'Pull Day'};
+const WD=['So','Mo','Di','Mi','Do','Fr','Sa'],WDL=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+let td={glass:250,days:{}};
+try{const s=JSON.parse(localStorage.getItem(TKEY));if(s)td={...td,...s,days:s.days||{}}}catch(e){}
+const tsave=()=>{const ks=Object.keys(td.days).sort();ks.slice(0,Math.max(0,ks.length-90)).forEach(k=>delete td.days[k]);try{localStorage.setItem(TKEY,JSON.stringify(td))}catch(e){}};
+const noon=d=>{const x=new Date(d);x.setHours(12,0,0,0);return x};
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+let cur=noon(new Date());
+const dget=k=>td.days[k]||{log:[],chk:{}};
+const dset=k=>td.days[k]||(td.days[k]={log:[],chk:{}});
+const isTrain=d=>{const x=dget(iso(d));return x.train!=null?x.train:(d.getDay() in TRAIN)};
+const goalOf=d=>BASE+(isTrain(d)?EXTRA:0);
+const ml=d=>dget(iso(d)).log.reduce((a,b)=>a+b,0);
+const L=v=>nf(v/1000,2)+' L';
+function tasksOf(d){
+ const t=[['omega','Omega-3','zu einer Mahlzeit','Supplements'],['d3','Vitamin D3','zu einer Mahlzeit mit etwas Fett','Supplements'],['mag','Magnesium','am Abend','Supplements']];
+ if(d.getDay()===3)t.push(['tret','Tretinoin-Creme','Mittwoch · abends auf trockene Haut','Hautpflege']);
+ if(d.getDay()===6)t.push(['azel','Azelainsäure','Samstag','Hautpflege']);
+ return t;
+}
+function renderHeute(){
+ const k=iso(cur),today=iso(noon(new Date())),x=dget(k),tr=isTrain(cur),g=goalOf(cur),m=ml(cur),p=Math.min(1,m/g);
+ const diff=Math.round((noon(new Date())-cur)/864e5);
+ $('dLbl').innerHTML=(diff===0?'Heute':diff===1?'Gestern':diff===-1?'Morgen':WDL[cur.getDay()])+`<small>${WD[cur.getDay()]}, ${cur.toLocaleDateString('de-AT',{day:'numeric',month:'long'})}</small>`;
+ $('dNext').disabled=k>=today;
+ $('wRing').style.strokeDashoffset=(326.73*(1-p)).toFixed(2);$('wRing').style.opacity=m>0?1:0;
+ $('wPct').textContent=Math.round(m/g*100)+' %';
+ $('wNum').textContent=nf(m/1000,2)+' / '+nf(g/1000,1)+' L';
+ $('wTxt').textContent=m>=g?'Ziel erreicht 💧':'noch '+L(g-m)+(tr?' · inkl. 1 L Training':'');
+ $('glasLbl').textContent=nf(td.glass/1000,2)+' L';
+ $('gsz').innerHTML='Glas:'+GL.map(v=>`<button type="button" data-gl="${v}" aria-pressed="${td.glass===v}">${nf(v/1000,2)} L</button>`).join('');
+ $('wLog').innerHTML=x.log.map(v=>`<span>${v===FL?'Flasche':'Glas'} ${nf(v/1000,2)} L</span>`).join('');
+ $('trSw').checked=tr;
+ $('trLbl').innerHTML=(tr&&TRAIN[cur.getDay()]?'Trainingstag · '+TRAIN[cur.getDay()]:'Trainingstag')+'<small>+1 L fürs Training (Ziel '+nf((BASE+EXTRA)/1000,1)+' L statt '+nf(BASE/1000,1)+' L)</small>';
+ $('wUndo').hidden=!x.log.length;
+ let w='';for(let i=6;i>=0;i--){const d=addD(noon(new Date()),-i),q=Math.min(1,ml(d)/goalOf(d));w+=`<button type="button" data-day="${iso(d)}" ${iso(d)===k?'aria-current="date"':''} aria-label="${WDL[d.getDay()]}: ${L(ml(d))}"><i><em style="height:${q*100}%"></em></i>${WD[d.getDay()]}</button>`}
+ $('week').innerHTML=w;
+ const ts=tasksOf(cur);let h='';
+ ['Supplements','Hautpflege'].forEach(sec=>{const its=ts.filter(t=>t[3]===sec);if(!its.length)return;const dn=its.filter(t=>x.chk[t[0]]).length;
+  h+=`<h2 class="sec">${sec}<span>${dn} von ${its.length}</span></h2><ul>`+its.map(([id,n,hint])=>`<li><label class="row${x.chk[id]?' done':''}"><input type="checkbox" data-tk="${id}" ${x.chk[id]?'checked':''}><span class="nm">${n}<small>${hint}</small></span></label></li>`).join('')+'</ul>'});
+ $('chk').innerHTML=h;
+ const open=tasksOf(noon(new Date())).filter(t=>!dget(today).chk[t[0]]).length;
+ $('badgeT').textContent=open;
+}
+function addWater(v){const k=iso(cur),before=ml(cur),g=goalOf(cur);dset(k).log.push(v);tsave();renderHeute();
+ if(before<g&&before+v>=g)toast('Tagesziel erreicht 💧',()=>{dset(k).log.pop();tsave();renderHeute()});
+ else toast('+ '+L(v)+' getrunken',()=>{dset(k).log.pop();tsave();renderHeute()})}
+document.addEventListener('click',e=>{
+ const b=e.target.closest('button');if(!b)return;
+ if(b.id==='addGlas')addWater(td.glass);
+ if(b.id==='addFl')addWater(FL);
+ if(b.id==='wUndo'){const x=dset(iso(cur));const v=x.log.pop();tsave();renderHeute();if(v)toast(L(v)+' entfernt',()=>{x.log.push(v);tsave();renderHeute()})}
+ if(b.dataset.gl){td.glass=+b.dataset.gl;tsave();renderHeute()}
+ if(b.id==='dPrev'){cur=addD(cur,-1);renderHeute()}
+ if(b.id==='dNext'&&!b.disabled){cur=addD(cur,1);renderHeute()}
+ if(b.dataset.day){const[y,mo,da]=b.dataset.day.split('-');cur=new Date(+y,mo-1,+da,12);renderHeute()}
+});
+document.addEventListener('change',e=>{
+ if(e.target.id==='trSw'){const k=iso(cur),def=cur.getDay() in TRAIN,x=dset(k);if(e.target.checked===def)delete x.train;else x.train=e.target.checked;tsave();renderHeute()}
+ const tk=e.target.dataset&&e.target.dataset.tk;
+ if(tk){const x=dset(iso(cur));if(e.target.checked)x.chk[tk]=1;else delete x.chk[tk];tsave();renderHeute()}
+});
+let lastToday=iso(noon(new Date()));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)return;const n=noon(new Date());if(iso(n)!==lastToday){lastToday=iso(n);cur=n}renderHeute()});
+
 function route(){
- const v=location.hash==='#mahlzeiten'?'mahlzeiten':'einkauf';
- ['einkauf','mahlzeiten'].forEach(x=>{$('v-'+x).hidden=x!==v;const t=$('t-'+x);if(x===v)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current')});
- if(v==='einkauf')$('sub').textContent='Einkaufsliste nach Abteilungen';else renderMeal();
+ const v=location.hash==='#mahlzeiten'?'mahlzeiten':location.hash==='#einkauf'?'einkauf':'heute';
+ ['heute','einkauf','mahlzeiten'].forEach(x=>{$('v-'+x).hidden=x!==v;const t=$('t-'+x);if(x===v)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current')});
+ if(v==='einkauf')$('sub').textContent='Einkaufsliste nach Abteilungen';else if(v==='heute'){$('sub').textContent='Wasser, Supplements & Hautpflege';renderHeute()}else renderMeal();
  window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',route);
-renderShop();renderSeg();renderMeal();route();
+renderShop();renderSeg();renderMeal();renderHeute();route();
 }
 </script>
 </body>
