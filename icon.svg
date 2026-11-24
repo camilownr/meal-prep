@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#2e6e4e"/>
+  <!-- Schüssel -->
+  <path d="M96 248h320c0 92-72 152-160 152S96 340 96 248z" fill="#ffffff"/>
+  <rect x="200" y="392" width="112" height="22" rx="11" fill="#ffffff"/>
+  <!-- Häkchen in der Schüssel -->
+  <path d="M206 300l36 34 66-70" fill="none" stroke="#2e6e4e" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dampf -->
+  <g fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round" opacity=".9">
+    <path d="M196 206c-18-22 18-36 0-62"/>
+    <path d="M256 206c-18-22 18-36 0-62"/>
+    <path d="M316 206c-18-22 18-36 0-62"/>
+  </g>
+</svg>
