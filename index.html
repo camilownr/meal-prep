@@ -317,7 +317,7 @@ document.addEventListener('change',e=>{
 });
 /* ---------- Heute: Wasser, Supplements, Hautpflege ---------- */
 const TKEY='mealprep-tag-v1',BASE=3400,EXTRA=1000,FL=1500,GL=[200,250,300,400];
-const TRAIN={0:'Push Day',3:'Upper Day',5:'Leg Day',6:'Pull Day'};
+const TRAIN={0:'Pull Day',3:'Upper Day',5:'Leg Day',6:'Push Day'};
 const WD=['So','Mo','Di','Mi','Do','Fr','Sa'],WDL=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
 let td={glass:250,days:{}};
 try{const s=JSON.parse(localStorage.getItem(TKEY));if(s)td={...td,...s,days:s.days||{}}}catch(e){}
